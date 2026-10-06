@@ -78,6 +78,12 @@ async def main(args):
         results.append(name)
     with tempfile.TemporaryDirectory(prefix='studio-ui-') as temp:
         app = create_app(Path(temp) / 'data', force_portable=True)
+        recent_ready = threading.Event()
+        @app.middleware('http')
+        async def hold_recent_history(request: Request, call_next):
+            if request.url.path == '/api/runs' and request.query_params.get('limit') == '3':
+                await asyncio.to_thread(recent_ready.wait, 10)
+            return await call_next(request)
         upstream = FastAPI()
         calls = []
         @upstream.post('/v1/chat/completions')
@@ -118,7 +124,11 @@ async def main(args):
                 await page.wait_for_selector('#import-dialog', state='hidden')
                 await page.wait_for_selector('.file-row')
                 check('ZIP upload over real HTTP creates workspace')
-                check('ready state has useful starters', await page.locator('#task-starters').is_visible())
+                try:
+                    await expect(page.locator('#task-starters')).to_be_visible()
+                    check('ready state has useful starters before history loads')
+                finally:
+                    recent_ready.set()
                 await page.screenshot(path=str(args.output / 'workspace.png'), full_page=True)
                 await page.locator('.file-row').filter(has_text='calc.py').first.click()
                 await page.wait_for_selector('#source-panel:not(.hidden)')

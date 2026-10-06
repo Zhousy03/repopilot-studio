@@ -344,7 +344,6 @@ async function selectWorkspace(id, reset = true) {
   $('empty-state').classList.add('hidden');
   $('investigation').classList.remove('hidden');
   renderFiles();
-  await refreshRecent();
   if (reset) {
     newQuestion();
     $('proposal-detail').classList.add('hidden');
@@ -352,6 +351,7 @@ async function selectWorkspace(id, reset = true) {
     $('test-summary').classList.add('hidden');
     $('change-count').textContent = '';
   }
+  await refreshRecent();
   await refreshVersions();
   syncWorkspaceControls();
 }

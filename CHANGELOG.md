@@ -7,6 +7,7 @@
 - Connection checks now use the current form and selected adapter without saving credentials or requiring source-upload consent.
 - Added clear syntax/test summaries, conditional Docker consent and unavailable-environment controls.
 - Prevented offline review/change requests and duplicate form submissions; fixed empty-workspace cleanup and history-search races.
+- Workspace question starters and cleared task state now appear before recent-history requests finish; browser checks cover delayed history responses.
 - Queued runs keep their submitted model configuration; remote HTTP clients respect environment proxy settings.
 - Queued task cancellation now finishes the saved record and releases queue capacity.
 - Replaced browser API bridging with real local HTTP/SSE verification and added release packaging with credential scans.
