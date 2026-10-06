@@ -1,0 +1,7 @@
+include LICENSE README.md
+recursive-include repopilot/static *.html *.css *.js
+global-exclude *.py[cod] *.sqlite3* *.db *.log
+prune .repopilot
+prune .venv
+prune .ui-results
+prune docs/validation
