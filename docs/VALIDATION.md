@@ -19,6 +19,14 @@ Verified on **2026-10-06**, Windows, Python 3.12.14. This record describes the c
 
 The real model checks used a disposable application data directory. Provider credentials were passed through the test process and were removed with that directory. No provider key or generated investigation database is included in the source release.
 
+## GitHub Actions
+
+The [first published commit's CI run](https://github.com/Zhousy03/repopilot-studio/actions/runs/37436778359) passed all five jobs on 2026-10-06, using GitHub-hosted Ubuntu runners:
+
+- Python 3.11, 3.12 and 3.13: regression tests, compilation and source-manifest verification passed. Python 3.12 reported **108 passed, 1 skipped**; the sandbox image is built in a separate job.
+- Browser: **35 checks passed** over a real local HTTP server, with no reported browser errors.
+- Docker: built the sandbox image and ran `tests/test_sandbox.py`, **4 passed**. This includes real container execution for the integration fixture.
+
 ## Reproduce the local checks
 
 ```bash
@@ -34,9 +42,9 @@ Browser output goes to `.ui-results/` and is excluded from source packaging. Onl
 
 ## Integrations requiring further checks
 
-- **Docker execution:** one integration test skipped because this machine lacks a prepared Docker daemon and test image. Fixed commands and failure handling passed regression tests; this run did not execute repository tests inside Docker.
+- **Docker execution:** verified with the small integration fixture in GitHub Actions. Tests for a user's imported project still require that user's Docker daemon and an appropriate test image. The local Windows suite skipped its container integration because this machine lacked the prepared image.
 - **Private GitHub and draft PR creation:** request contracts and confirmation logic passed tests. Real credentials, remote branch creation and remote CI were not exercised.
 - **Embedding, backup-provider failover and native model tool calling:** protocol and failure paths have local tests; these features were not exercised against the supplied provider.
-- **PostgreSQL, macOS/Linux and GitHub Actions:** require verification in those environments. The included CI configuration runs Python, browser and Docker checks when published to GitHub.
+- **PostgreSQL and macOS:** require verification in those environments. Ubuntu and GitHub Actions were exercised by the linked CI run.
 
 The live model acceptance checks verify a small repair flow. They do not measure general answer accuracy or project-wide test coverage. Source-reference validation checks identifiers; readers still need to assess whether cited source supports an answer.

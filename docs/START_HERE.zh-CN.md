@@ -6,6 +6,14 @@ RepoPilot Studio 把源码浏览、代码问答、修改审查和检查放在一
 
 需要 Python 3.11 或更新版本。前端已经包含在项目中，无需安装 Node.js。
 
+下载并解压源码 ZIP，或通过 Git 获取项目：
+
+```bash
+git clone https://github.com/Zhousy03/repopilot-studio.git
+```
+
+在解压或克隆后的 `repopilot-studio` 目录中运行下面的命令。
+
 Windows PowerShell：
 
 ```powershell

@@ -12,6 +12,15 @@ Import a GitHub repository, a local folder, or a ZIP. Browse the source, connect
 
 Requires Python 3.11+. The frontend is included; no Node.js build is needed.
 
+Download and extract the source ZIP, or clone the repository:
+
+```bash
+git clone https://github.com/Zhousy03/repopilot-studio.git
+cd repopilot-studio
+```
+
+Run the following commands from the project directory:
+
 ```bash
 python -m venv .venv
 # macOS / Linux
